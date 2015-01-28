@@ -8,11 +8,11 @@ from django.contrib.syndication.views import Feed
 # Create your views here.
 def index(request):
     """首页"""
-    archive_dates = Article.objects.datetimes('publish_date', 'month', order='DESC')
+    archive_dates = Article.objects.datetimes('publish_date', 'month', order='ASC')
     categories = Category.objects.all()
 
     page = request.GET.get('page')
-    article_queryset = Article.objects.all()
+    article_queryset = Article.objects.all().order_by('-publish_date')
     paginator = Paginator(article_queryset, 5,)
 
     try:

@@ -1,5 +1,6 @@
 # coding:utf-8
 from django.db import models
+from django.core.urlresolvers import reverse
 from ckeditor.fields import RichTextField
 
 # Create your models here.
@@ -41,6 +42,7 @@ class Article(models.Model):
         (CONTENT_STATUS_DRAFT, u"草稿箱"),
         )
 
+    categories = models.ManyToManyField(Category, blank = True, verbose_name = u"分类", related_name = "categories")
     title = models.CharField(u"标题", max_length = 100)
     content = RichTextField(u"文章内容")
     publish_date = models.DateTimeField(u"发表时间")
@@ -51,12 +53,16 @@ class Article(models.Model):
     alias = models.CharField(u"别名", max_length=100, blank = True)
     keywords = models.CharField(u"关键字", max_length = 500, blank = True)
     description = models.TextField(u"描述", blank = True)
-    categories = models.ManyToManyField(Category, blank = True, verbose_name = u"分类", related_name = "articles")
+
 
     class Meta:
         verbose_name = u"文章"
         verbose_name_plural = u"文章"
         ordering = ['publish_date']
+
+    def get_absolute_url(self):
+        path = reverse('detail', kwargs={'id': self.id})
+        return "http://127.0.0.1:8000%s" % path
 
     def __unicode__(self):
         return self.title

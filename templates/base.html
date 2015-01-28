@@ -5,7 +5,9 @@
 
         <title>{% block title %}{% endblock %}</title>
         <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="
+        stylesheet">
+        <link rel="stylesheet" href="http://picturebag.qiniudn.com/monokai.css">
 
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,8 +24,11 @@
                     <ul class="nav nav-pills pull-right">
                         <li{% if "/" == request.get_full_path %} class="active"{% endif %}><a href="/">Home</a></li>
                         <li{% if "/blog/" == request.get_full_path %} class="active"{% endif %}><a href="/">Blog</a></li>
+                         <li><a href="#">归档</a></li>
+                        <li><a href="#">Wiki</a></li>
+                        <li><a href="#">关于我</a></li>
                     </ul>
-                    <h3 class="muted">Example Site</h3>
+                    <h3 class="muted">MemoryTree</h3>
                 </div>
                 {% block breadcrumb %}{% endblock %}
                 {% block content %}{% endblock%}

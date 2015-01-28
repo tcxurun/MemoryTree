@@ -17,10 +17,11 @@
         <p class="meta">{{ article.publish_date|date:"F j, Y" }}</p>
         {{ article.content|safe }}
         <p class="meta">{% for category in article.categories.all %}<a class="btn" href="{% url 'blog-category-archive' id=category.id %}">{{ category.title }}</a> {% endfor %}</p>
-        {% if request.user.is_staff %}[ <a class="edit-link" href="{{ article.get_admin_url }}">Edit</a> ]{% endif %}
-        <hr />
-
-    <div class="span3">
+        {% if request.user.is_staff %}
+        [ <a class="edit-link" href="{{ article.get_admin_url }}">Edit</a> ]
+        {% endif %}
+    </div>
+<div class="span3">
         <ul class="nav nav-list">
         {% if archive_dates|length > 0%}
             <li class="nav-header">Archive Dates</li>
@@ -34,5 +35,6 @@
         {% endif %}
         </ul>
     </div>
+     {% include "duoshuo.html" %}
 </div>
 {% endblock %}
