@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load custom_markdown %}
+{% block title %}{{ article.title }} | Blog | {{ block.super }}{% endblock%}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+  <li><a href="/">Wiki</a> <span class="divider">/</span></li>
+  <li><a href="{% url 'home' %}">Blog</a> <span class="divider">/</span></li>
+  <li class="active">{{ post.title }}</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span9">
+        <h3>{{ post.title }}</h3>
+        <p class="meta">{{ post.publish_date|date:"F j, Y" }}</p>
+        {{ post.content_markup|safe }}
+        <p class="meta">{% for category in post.categories.all %}<a class="btn" href="{% url 'wiki-category-archive' id=category.id %}">{{ category.title }}</a> {% endfor %}</p>
+        {% if request.user.is_staff %}
+        [ <a class="edit-link" href="{{ post.get_admin_url }}">Edit</a> ]
+        {% endif %}
+    </div>
+<div class="span3">
+        <ul class="nav nav-list">
+            <li class="nav-header">Categories</li>
+            {% for tmp in categories %}
+            <li{% if category.id == tmp.id %} class="active"{% endif %}><a href="{% url 'wiki-category-archive' id=tmp.id %}">{{ tmp.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

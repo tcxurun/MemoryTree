@@ -38,6 +38,7 @@ def detail(request, id):
     article = get_object_or_404(Article, id = str(id))
     archive_dates = Article.objects.datetimes('publish_date', 'month', order='DESC')
     categories = Category.objects.all()
+    print '1111'
     return render(
         request,
         "blog/detail.html",
@@ -106,7 +107,7 @@ def category_archive(request, id):
             "articles": articles,
             "archive_dates": archive_dates,
             "categories": categories,
-            "categories": categories
+            "category": category
         })
 
 def about_me(request):

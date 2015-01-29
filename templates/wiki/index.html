@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load custom_markdown %}
+{% block title %}Blog {{ block.super }}{% endblock%}
+{% block breadcrumb %}
+
+{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span9">
+        <h3>Wiki Index</h3>
+        {% for item in posts %}
+        <article class="news-item">
+            <h4 class="title"><a href="{% url 'wiki-single' id=item.id %}">{{ item.title }}</a></h4>
+             <div class="text">
+                <p>{{ item.content|custom_markdown }}</p>
+            </div>
+
+        </article>
+            <ul>
+         <liclass="divider-vertical"></li>
+         </ul>
+        {% endfor %}
+
+        <div class="pagination pagination-small pagination-centered">
+            <ul>
+                {% if posts.has_previous %}
+                <li><a href="?page={{ posts.previous_page_number }}">previous</a></li>
+                {% else %}
+                <li class="disabled"><span>previous</span></li>
+                {% endif %}
+
+                <li class="active"><span>{{ posts.number }}</span></li>
+
+                {% if posts.has_next %}
+                <li><a href="?page={{ posts.next_page_number }}">next</a></li>
+                {% else %}
+                <li class="disabled"><span>next</span></li>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+        <div class="span3">
+        <ul class="nav nav-list">
+            <li class="nav-header">Categories</li>
+            {% for tmp in categories %}
+            <li{% if category.id == tmp.id %} class="active"{% endif %}><a href="{% url 'wiki-category-post' id=tmp.id %}">{{ tmp.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
