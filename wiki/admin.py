@@ -1,6 +1,7 @@
 # coding:utf-8
 from django.contrib import admin
 from wiki.models import Post, Category
+from mptt.admin import MPTTModelAdmin
 
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title', )}
@@ -12,12 +13,8 @@ class PostAdmin(admin.ModelAdmin):
             {
                 'fields': ('title', 'slug', 'publish_date', 'content', 'categories')
             }),
-        ('Meta Data',
-            {
-                'fields': ('slug')
-            }),
     )
 
 # Register your models here.
 admin.site.register(Post, PostAdmin)
-admin.site.register(Category)
+admin.site.register(Category, MPTTModelAdmin)

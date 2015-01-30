@@ -1,12 +1,12 @@
 # coding:utf-8
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from wiki.models import Post, Category
 
 # Create your views here.
 def index(request):
     """首页"""
-    categories = Category.objects.all()
+    categories = Category.objects.filter(parent = None)
 
     page = request.GET.get('page')
     post_queryset = Post.objects.all().order_by('-publish_date')
@@ -41,7 +41,7 @@ def single(request, id):
             "categories": categories
         })
 
-def category_post(request, id):
+def category_archive(request, id):
     categories = Category.objects.all()
     category = get_object_or_404(Category, id=str(id))
 
@@ -60,7 +60,7 @@ def category_post(request, id):
 
     return render(
         request,
-        "wiki/category_post.html",
+        "wiki/category_archive.html",
         {
             "posts": posts,
             "categories": categories,
@@ -68,10 +68,12 @@ def category_post(request, id):
         })
 
 def category_view(request):
-    return render(
-        request,
+    cates = Category.objects.all()
+    for cate in cates:
+        print 'title: %s' % cate.title
+    return render_to_response(
         'wiki/category.html',
         {
-            'categories': Category.objects.filter(parent = None)
+            'nodes': cates,
         }
     )

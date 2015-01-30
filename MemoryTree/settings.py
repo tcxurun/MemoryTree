@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'blog',
     'wiki',
+    'mptt',
 )
 
 MIDDLEWARE_CLASSES = (

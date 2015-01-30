@@ -22,7 +22,7 @@ urlpatterns = patterns(
 
     url(r'^wiki/$', 'wiki.views.index', name='wiki-index'),
     url(r'^wiki/(?P<id>\d+)/$', 'wiki.views.single', name='wiki-single'),
-    url(r'^wiki/archive/(?P<id>\d+)/$', 'wiki.views.category_post', name
-        ='wiki-category-post'),
+    url(r'^wiki/archive/(?P<id>\d+)/$', 'wiki.views.category_archive', name
+        ='wiki-category-archive'),
     url(r'^wiki/category/view/$', 'wiki.views.category_view', name='category-view'),
 )

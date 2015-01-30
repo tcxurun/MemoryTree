@@ -1,6 +1,5 @@
-{% load category_tags %}
-{% if categories %}</pre>
-<ul>{% for cate in categories %}
+{% if cates %}</pre>
+<ul>{% for cate in cates %}
 <li>{{ cate.title }} {% category_tree cate %}</li>
 {% endfor %}
 </ul>

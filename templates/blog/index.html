@@ -8,7 +8,7 @@
 {% block content %}
 <div class="row-fluid">
     <div class="span9">
-        <h3>Blog Index</h3>
+        <h3>Blog</h3>
         {% for item in articles %}
         <article class="news-item">
             <h4 class="title"><a href="{% url 'detail' id=item.id %}">{{ item.title }}</a></h4>
