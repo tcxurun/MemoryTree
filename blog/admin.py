@@ -4,6 +4,7 @@ from blog.models import Article, Category
 from django.db import models
 from ckeditor.widgets import CKEditorWidget
 
+
 class ArticleAdmin(admin.ModelAdmin):
     content = {
         models.TextField: {'widget': CKEditorWidget},

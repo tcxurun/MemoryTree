@@ -47,7 +47,7 @@
              {% for thing in categories %}
                 {% for branch, obj in thing.as_tree %}
                 {% if obj %}
-                     <li{% if category.id == obj.id %} class="active"{% endif %}><a href="{% url 'wiki-category-post' id=obj.id %}">{{ obj.title }}</a>
+                     <li{% if category.id == obj.id %} class="active"{% endif %}><a href="{% url 'wiki-category-archive' id=obj.id %}">{{ obj.title }}</a>
                         {% if branch %}
                             <ul>
                         {% else %}

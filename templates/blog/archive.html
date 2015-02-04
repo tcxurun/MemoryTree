@@ -1,36 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Blog {{ block.super }}{% endblock%}
-{% block breadcrumb %}
 
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li><a href="{% url 'home' %}">Blog</a> <span class="divider">/</span></li>
+   <li class="active">Archive: All</li>
+</ul>
 {% endblock %}
 
 {% block content %}
 <div class="row-fluid">
     <div class="span9">
-        <h3>Blog</h3>
         {% for item in articles %}
         <article class="news-item">
             <h4 class="title"><a href="{% url 'detail' id=item.id %}">{{ item.title }}</a></h4>
-             <div class="text">
-                <p>{{ item.content|safe }}</p>
-            </div>
-
-            <div class="meta">
-
-            <ul class="nav nav-pills">
-             <li><a href="{% url 'blog-date-archive' month=item.publish_date|date:"m" year=item.publish_date|date:"Y" %}"> {{ item.publish_date|date:"F j, Y" }}</a></li>
-              {% for cg in item.categories.all %}
-               <li><a href="{% url 'blog-category-archive' id=cg.id %}">{{ cg.title }}</a></li>
-             {% endfor %}
-             </ul>
-            </div>
+            <div class="meta">{{ item.publish_date|date:"F j, Y" }}</div>
         </article>
-            <ul class="nav nav-list">
-          <li class="divider"></li>
-         </ul>
         {% endfor %}
-
         <div class="pagination pagination-small pagination-centered">
             <ul>
                 {% if articles.has_previous %}
@@ -49,13 +37,12 @@
             </span>
         </div>
     </div>
-
-        <div class="span3">
+    <div class="span3">
         <ul class="nav nav-list">
         {% if archive_dates|length > 0%}
             <li class="nav-header">Archive Dates</li>
             {% for date in archive_dates %}
-            <li><a href="{% url 'blog-date-archive' month=date|date:"m" year=date|date:"Y" %}">{{ date|date:"M Y" }}</a></li>
+            <li{% if date.month == start.month and date.year == start.year %} class="active"{% endif %}><a href="{% url 'blog-date-archive' month=date|date:"m" year=date|date:"Y" %}">{{ date|date:"M Y" }}</a></li>
             {% endfor %}
             <li class="nav-header">Categories</li>
             {% for tmp in categories %}

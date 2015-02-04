@@ -24,7 +24,7 @@
                     <ul class="nav nav-pills pull-right">
                         <li{% if "/" == request.get_full_path %} class="active"{% endif %}><a href="/">Home</a></li>
                         <li{% if "/blog/" == request.get_full_path %} class="active"{% endif %}><a href="/">Blog</a></li>
-                         <li><a href="#">归档</a></li>
+                         <li><a href="{% url 'blog-archive' %}">归档</a></li>
                         <li><a href="{% url 'wiki-index' %}">Wiki</a></li>
                         <li><a href="#">关于我</a></li>
                     </ul>

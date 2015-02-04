@@ -2,8 +2,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.models import Article, Category
-import calendar, datetime
+import calendar
+import datetime
 from django.contrib.syndication.views import Feed
+
 
 # Create your views here.
 def index(request):
@@ -33,6 +35,7 @@ def index(request):
             "categories": categories
         })
 
+
 def detail(request, id):
     """文章详情页面"""
     article = get_object_or_404(Article, id = str(id))
@@ -47,6 +50,7 @@ def detail(request, id):
             "archive_dates": archive_dates,
             "categories": categories
         })
+
 
 def date_archive(request, year, month):
     """根据所选日期选择文章"""
@@ -82,6 +86,7 @@ def date_archive(request, year, month):
             "categories": categories
         })
 
+
 def category_archive(request, id):
     archive_dates = Article.objects.datetimes('publish_date', 'month', order='DESC')
     categories = Category.objects.all()
@@ -110,8 +115,37 @@ def category_archive(request, id):
             "category": category
         })
 
+
+def archive(request):
+    archive_dates = Article.objects.datetimes('publish_date', 'month', order='DESC')
+    categories = Category.objects.all()
+
+    page = request.GET.get('page')
+    article_queryset = Article.objects.all()
+    paginator = Paginator(article_queryset, 5,)
+
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        #  如果page不是一个整数,返回第一页
+        articles = paginator.page(1)
+    except EmptyPage:
+        #  如果页数超过边界,返回最后一页
+        articles = paginator(paginator.num_pages)
+
+    return render(
+        request,
+        "blog/archive.html",
+        {
+            "articles": articles,
+            "archive_dates": archive_dates,
+            "categories": categories,
+        })
+
+
 def about_me(request):
     return render(request, "blog/aboutme.html")
+
 
 class RSSFeed(Feed):
     title = "RSS feed - article"

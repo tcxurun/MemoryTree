@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% load custom_markdown %}
-{% block title %}{{ article.title }} | Blog | {{ block.super }}{% endblock%}
 
 {% block breadcrumb %}
 <ul class="breadcrumb">
   <li><a href="/">Wiki</a> <span class="divider">/</span></li>
-  <li><a href="{% url 'home' %}">Blog</a> <span class="divider">/</span></li>
   <li class="active">{{ post.title }}</li>
 </ul>
 {% endblock %}
@@ -27,7 +25,7 @@
              {% for thing in categories %}
                 {% for branch, obj in thing.as_tree %}
                 {% if obj %}
-                     <li{% if category.id == obj.id %} class="active"{% endif %}><a href="{% url 'wiki-category-post' id=obj.id %}">{{ obj.title }}</a>
+                     <li{% if category.id == obj.id %} class="active"{% endif %}><a href="{% url 'wiki-category-archive' id=obj.id %}">{{ obj.title }}</a>
                         {% if branch %}
                             <ul>
                         {% else %}
